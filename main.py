@@ -47,13 +47,13 @@ def predict_rub_salary_hh():
                 predicted_salary = predict_rub_salary(currency, payment_to, payment_from)
                 if predicted_salary:
                     vacancies_salaries.append(predicted_salary)
-                vacancies_processed = len(vacancies_salaries)
-            if vacancies_processed:
-                average_salary = int(sum(vacancies_salaries) / vacancies_processed)
-            else:
-                average_salary = 0
             pages = page['pages']
             page_number+=1
+        vacancies_processed = len(vacancies_salaries)
+        if vacancies_processed:
+            average_salary = int(sum(vacancies_salaries) / vacancies_processed)
+        else:
+            average_salary = 0
         languages_average_salary = {
                 'language' : language,
                 'vacancies_found' : page['found'],
@@ -92,12 +92,12 @@ def predict_rub_salary_for_superJob(token):
                 predicted_salary = predict_rub_salary(currency, payment_to, payment_from)
                 if predicted_salary:
                     vacancies_salaries.append(predicted_salary)
-            vacancies_processed = len(vacancies_salaries)
-            if vacancies_processed:
-                average_salary = int(sum(vacancies_salaries) / vacancies_processed)
             page_number+=1
             if not result['more']:
                 break
+        vacancies_processed = len(vacancies_salaries)
+        if vacancies_processed:
+            average_salary = int(sum(vacancies_salaries) / vacancies_processed)
         languages_average_salary = {
             'language' : language,
             'vacancies_found' : result['total'],
@@ -142,3 +142,4 @@ if '__main__' == __name__:
     sj_table = make_table(predict_rub_salary_for_superJob(sj_token), 'super job vacancies moscow')
     print(hh_table.table)
     print(sj_table.table)
+
